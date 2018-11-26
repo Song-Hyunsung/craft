@@ -3,5 +3,6 @@ const router = express.Router();
 
 router.use('/', require('./home'));
 router.use('/task', require('./task'));
+router.use('/auth', require('./auth'));
 
 module.exports = router;

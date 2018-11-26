@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
 	const Task = sequelize.define('Task', {
 		// id, createdAt, updatedAt already exists in sequelize
-		task_description: {	
+		taskDescription: {	
 			type: DataTypes.TEXT,
 		},
-		task_title: {
+		taskTitle: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
