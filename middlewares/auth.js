@@ -3,6 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models').User;
+const Project = require('../models').Project;
 
 function passwordMatch(password_submit, stored_password){
 	return bcrypt.compareSync(password_submit, stored_password);
@@ -44,6 +45,34 @@ passport.redirectIfLoggedIn = (route) =>
 
 passport.redirectIfNotLoggedIn = (route) =>
 	(req, res, next) => (req.user ? next() : res.redirect(route));
+
+function userMatch(passportId, paramsId){
+	try{
+		if(passportId === Number(paramsId)){
+			return true;
+		} else {
+			return false;
+		}
+	} catch(error){
+		console.log(error);
+		return false;
+	}
+}
+
+passport.checkOwnership = () => (req, res, next) => {
+	if(req.user){
+		if(userMatch(req.user.id, req.params.id)){
+			next();
+		} else {
+			res.status(401).json({ msg : "User does not match" });
+		}
+	} else {
+		res.status(401).json({ msg : "User not logged in" });
+	}
+}
+
+
+
 
 
 module.exports = passport;

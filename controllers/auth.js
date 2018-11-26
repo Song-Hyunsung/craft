@@ -40,7 +40,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/profile/:id',
-	passport.redirectIfNotLoggedIn('/auth/error'),
+	passport.checkOwnership(),
 	(req, res) => {
 		User.findById(req.params.id).then((user) => {
 			Project.findAll({
@@ -59,7 +59,7 @@ router.get('/profile/:id',
 	});
 
 router.post('/profile/:id',
-	passport.redirectIfNotLoggedIn('/auth/error'),
+	passport.checkOwnership(),
 	(req, res) => {
 		User.findById(req.params.id).then((user) => {
 			Project.create({
@@ -80,7 +80,7 @@ router.post('/profile/:id',
 	});
 
 router.get('/profile/:id/:project_id',
-	passport.redirectIfNotLoggedIn('/auth/error'),
+	passport.checkOwnership(),
 	(req, res) => {
 		Project.findById(req.params.project_id).then((project) => {
 			Task.findAll({
@@ -97,7 +97,7 @@ router.get('/profile/:id/:project_id',
 	});
 
 router.post('/profile/:id/:project_id',
-	passport.redirectIfNotLoggedIn('/auth/error'),
+	passport.checkOwnership(),
 	(req, res) => {
 		Project.findById(req.params.project_id).then((project) => {
 			Task.create({
