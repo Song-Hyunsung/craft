@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 				isAlphanumeric: true,
 			},
 		},
-		passwordHash: {
+		password_hash: {
 			type: DataTypes.STRING,
 		},
 	});
