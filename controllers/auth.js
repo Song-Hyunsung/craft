@@ -113,6 +113,72 @@ router.post('/profile/:id/:project_id',
 		});
 	});
 
+router.put('/profile/:id/:project_id',
+	passport.checkOwnership(),
+	(req, res) => {
+		Project.findById(req.params.project_id).then((project) => {
+			project.update({
+				projectTitle: req.body.projectTitle,
+				projectDescription: req.body.projectDescription,
+			}).then((updatedProject) => {
+				res.json({
+					updatedProject
+				})
+			}).catch(() => {
+				res.status(400).json({ msg : "Error updating project with project id" + project.id });
+			});
+		}).catch(() => {
+			res.status(400).json({ msg : "Cannot find project with id " + req.params.project_id });
+		});
+	});
+
+router.delete('/profile/:id/:project_id',
+	passport.checkOwnership(),
+	(req, res) => {
+		Project.findById(req.params.project_id).then((project) => {
+			project.destroy();
+			res.json({
+				msg : "Project with id " + req.params.project_id + " deleted from database"
+			})
+		}).catch(() => {
+			res.status(400).json({ msg : "Error finding project with id " + req.params.project_id });
+		});
+	});
+
+router.put('/profile/:id/:project_id/:task_id',
+	passport.checkOwnership(),
+	(req, res) => {
+		Task.findById(req.params.task_id).then((task) => {
+			task.update({
+				taskTitle: req.body.taskTitle,
+				taskDescription: req.body.taskDescription,
+			}).then((updatedTask) => {
+				res.json({
+					updatedTask
+				})
+			}).catch(() => {
+				res.status(400).json({ msg : "Error updating Task with task id" + task.id });
+			});
+		}).catch(() => {
+			res.status(400).json({ msg : "Cannot find task with id " + req.params.task_id });
+		});
+	});
+
+router.delete('/profile/:id/:project_id/:task_id',
+	passport.checkOwnership(),
+	(req, res) => {
+		Task.findById(req.params.task_id).then((task) => {
+			task.destroy();
+			res.json({
+				msg : "Task with id " + req.params.task_id + " deleted from database"
+			})
+		}).catch(() => {
+			res.status(400).json({ msg : "Error finding Task with id " + req.params.task_id });
+		});
+	});
+
+
+
 router.get('/error', (req, res) => {
 	res.sendStatus(401);
 });
