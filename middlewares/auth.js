@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models').User;
 const Project = require('../models').Project;
+const Task = require('../models').Task;
 
 function passwordMatch(password_submit, stored_password){
 	return bcrypt.compareSync(password_submit, stored_password);
@@ -46,9 +47,9 @@ passport.redirectIfLoggedIn = (route) =>
 passport.redirectIfNotLoggedIn = (route) =>
 	(req, res, next) => (req.user ? next() : res.redirect(route));
 
-function userMatch(passportId, paramsId){
+function doesMatch(firstId, secondId){
 	try{
-		if(passportId === Number(paramsId)){
+		if(Number(firstId) === Number(secondId)){
 			return true;
 		} else {
 			return false;
@@ -61,7 +62,7 @@ function userMatch(passportId, paramsId){
 
 passport.checkOwnership = () => (req, res, next) => {
 	if(req.user){
-		if(userMatch(req.user.id, req.params.id)){
+		if(doesMatch(req.user.id, req.params.id)){
 			next();
 		} else {
 			res.status(401).json({ msg : "User does not match" });
@@ -71,6 +72,29 @@ passport.checkOwnership = () => (req, res, next) => {
 	}
 }
 
+passport.checkProjectOwnership = () => (req, res, next) => {
+	Project.findById(req.params.project_id).then((project) => {
+		if(doesMatch(req.user.id, project.UserId)){
+			next();
+		} else {
+			res.status(401).json({ msg : "User does not match with project" })
+		}
+	}).catch(() => {
+		res.status(400).json({ msg : "Project does not exist" })
+	})
+}
+
+passport.checkTaskOwnership = () => (req, res, next) => {
+	Task.findById(req.params.task_id).then((task) => {
+		if(doesMatch(req.params.project_id, task.ProjectId)){
+			next();
+		} else {
+			res.status(401).json({ msg: "Project does not match with task" })
+		}
+	}).catch(() => {
+		res.status(400).json({ msg : "Task does not exist" })
+	})
+}
 
 
 
