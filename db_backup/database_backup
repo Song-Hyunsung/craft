@@ -1,0 +1,310 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+
+-- Started on 2018-12-02 10:12:23 EST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 13039)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2944 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 199 (class 1259 OID 16731)
+-- Name: Projects; Type: TABLE; Schema: public; Owner: song_project
+--
+
+CREATE TABLE public."Projects" (
+    id integer NOT NULL,
+    "projectTitle" character varying(255) NOT NULL,
+    "projectDescription" text,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "UserId" integer
+);
+
+
+ALTER TABLE public."Projects" OWNER TO song_project;
+
+--
+-- TOC entry 198 (class 1259 OID 16729)
+-- Name: Projects_id_seq; Type: SEQUENCE; Schema: public; Owner: song_project
+--
+
+CREATE SEQUENCE public."Projects_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Projects_id_seq" OWNER TO song_project;
+
+--
+-- TOC entry 2945 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: Projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: song_project
+--
+
+ALTER SEQUENCE public."Projects_id_seq" OWNED BY public."Projects".id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 16747)
+-- Name: Tasks; Type: TABLE; Schema: public; Owner: song_project
+--
+
+CREATE TABLE public."Tasks" (
+    id integer NOT NULL,
+    "taskDescription" text,
+    "taskTitle" character varying(255) NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "ProjectId" integer
+);
+
+
+ALTER TABLE public."Tasks" OWNER TO song_project;
+
+--
+-- TOC entry 200 (class 1259 OID 16745)
+-- Name: Tasks_id_seq; Type: SEQUENCE; Schema: public; Owner: song_project
+--
+
+CREATE SEQUENCE public."Tasks_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Tasks_id_seq" OWNER TO song_project;
+
+--
+-- TOC entry 2946 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: Tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: song_project
+--
+
+ALTER SEQUENCE public."Tasks_id_seq" OWNED BY public."Tasks".id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 16720)
+-- Name: Users; Type: TABLE; Schema: public; Owner: song_project
+--
+
+CREATE TABLE public."Users" (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    password_hash character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Users" OWNER TO song_project;
+
+--
+-- TOC entry 196 (class 1259 OID 16718)
+-- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: song_project
+--
+
+CREATE SEQUENCE public."Users_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Users_id_seq" OWNER TO song_project;
+
+--
+-- TOC entry 2947 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: Users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: song_project
+--
+
+ALTER SEQUENCE public."Users_id_seq" OWNED BY public."Users".id;
+
+
+--
+-- TOC entry 2800 (class 2604 OID 16734)
+-- Name: Projects id; Type: DEFAULT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Projects" ALTER COLUMN id SET DEFAULT nextval('public."Projects_id_seq"'::regclass);
+
+
+--
+-- TOC entry 2801 (class 2604 OID 16750)
+-- Name: Tasks id; Type: DEFAULT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Tasks" ALTER COLUMN id SET DEFAULT nextval('public."Tasks_id_seq"'::regclass);
+
+
+--
+-- TOC entry 2799 (class 2604 OID 16723)
+-- Name: Users id; Type: DEFAULT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Users_id_seq"'::regclass);
+
+
+--
+-- TOC entry 2934 (class 0 OID 16731)
+-- Dependencies: 199
+-- Data for Name: Projects; Type: TABLE DATA; Schema: public; Owner: song_project
+--
+
+COPY public."Projects" (id, "projectTitle", "projectDescription", "createdAt", "updatedAt", "UserId") FROM stdin;
+2	ProjectTwo	ProjectTwoDesc	2018-11-25 23:03:29.797-05	2018-11-25 23:03:29.797-05	1
+3	UpdatedProjectThree	UpdatedProjectThreeDesc	2018-11-25 23:03:38.5-05	2018-11-26 21:50:53.379-05	1
+5	WHAT	WUT	2018-11-29 01:59:50.224-05	2018-11-29 01:59:50.224-05	2
+1	WHAT UPDATED	WUT UPDATED	2018-11-25 23:03:15.789-05	2018-11-29 02:00:10.499-05	1
+\.
+
+
+--
+-- TOC entry 2936 (class 0 OID 16747)
+-- Dependencies: 201
+-- Data for Name: Tasks; Type: TABLE DATA; Schema: public; Owner: song_project
+--
+
+COPY public."Tasks" (id, "taskDescription", "taskTitle", "createdAt", "updatedAt", "ProjectId") FROM stdin;
+1	taskDescOneProjectOne	taskTitleOneProjectOne	2018-11-25 23:24:16.209-05	2018-11-25 23:24:16.209-05	1
+2	taskDescTwoProjectOne	taskTitleTwoProjectOne	2018-11-25 23:24:26.184-05	2018-11-25 23:24:26.184-05	1
+3	taskDescOneProjectTwo	taskTitleOneProjectTwo	2018-11-25 23:24:40.898-05	2018-11-25 23:24:40.898-05	1
+4	taskDescOneProjectTwo	taskTitleOneProjectTwo	2018-11-25 23:24:51.582-05	2018-11-25 23:24:51.582-05	2
+5	taskDescTwoProjectTwo	taskTitleTwoProjectTwo	2018-11-25 23:25:00.784-05	2018-11-25 23:25:00.784-05	2
+7	HOHO	HAHA	2018-11-30 23:38:36.157-05	2018-11-30 23:38:36.157-05	5
+\.
+
+
+--
+-- TOC entry 2932 (class 0 OID 16720)
+-- Dependencies: 197
+-- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: song_project
+--
+
+COPY public."Users" (id, username, password_hash, "createdAt", "updatedAt") FROM stdin;
+1	testuserone	$2a$10$URa1kb3Y2/YIxIAwVV9fT.r8pZCprqFswuw146n4CABrSJfEZffo6	2018-11-25 22:53:56.168-05	2018-11-25 22:53:56.168-05
+2	testusertwo	$2a$10$uoAGuiqp4cD9VGkixQtxJOgYBFnD4kA8ghiAhoeuOmufXMkFuRvsO	2018-11-26 13:14:49.481-05	2018-11-26 13:14:49.481-05
+3	testuserthree	$2a$10$mcUPfZtI0D/pdbLRWlIkfeY47pG9QW7ppKP7Ji0Ej2vc1ORpSdY5O	2018-11-30 13:53:50.195-05	2018-11-30 13:53:50.195-05
+\.
+
+
+--
+-- TOC entry 2948 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: Projects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: song_project
+--
+
+SELECT pg_catalog.setval('public."Projects_id_seq"', 5, true);
+
+
+--
+-- TOC entry 2949 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: Tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: song_project
+--
+
+SELECT pg_catalog.setval('public."Tasks_id_seq"', 7, true);
+
+
+--
+-- TOC entry 2950 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: song_project
+--
+
+SELECT pg_catalog.setval('public."Users_id_seq"', 3, true);
+
+
+--
+-- TOC entry 2805 (class 2606 OID 16739)
+-- Name: Projects Projects_pkey; Type: CONSTRAINT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Projects"
+    ADD CONSTRAINT "Projects_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2807 (class 2606 OID 16755)
+-- Name: Tasks Tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Tasks"
+    ADD CONSTRAINT "Tasks_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2803 (class 2606 OID 16728)
+-- Name: Users Users_pkey; Type: CONSTRAINT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2808 (class 2606 OID 16740)
+-- Name: Projects Projects_UserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Projects"
+    ADD CONSTRAINT "Projects_UserId_fkey" FOREIGN KEY ("UserId") REFERENCES public."Users"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 2809 (class 2606 OID 16756)
+-- Name: Tasks Tasks_ProjectId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: song_project
+--
+
+ALTER TABLE ONLY public."Tasks"
+    ADD CONSTRAINT "Tasks_ProjectId_fkey" FOREIGN KEY ("ProjectId") REFERENCES public."Projects"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+-- Completed on 2018-12-02 10:12:23 EST
+
+--
+-- PostgreSQL database dump complete
+--
+

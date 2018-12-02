@@ -23,13 +23,12 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login',
-	passport.authenticate('local', { failureRedirect: '/api/signup' }),
+	passport.authenticate('local', function ),
 	(req, res) => {
-		res.json({
-			msg: "Succesfully authenticated",
-			id: req.user.id,
+		res.status(200).json({
 			username: req.user.username,
-		});
+			id: req.user.id
+		})
 	});
 
 router.get('/logout', (req, res) => {
