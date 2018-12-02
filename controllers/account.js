@@ -23,7 +23,7 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login',
-	passport.authenticate('local', function ),
+	passport.authenticate('local'),
 	(req, res) => {
 		res.status(200).json({
 			username: req.user.username,
