@@ -12,3 +12,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#site-header {
+	background: #e3e1e4;
+	border-bottom: #000 1px solid;
+}
+
+#site-header a {
+	text-decoration: none;
+	font: 300% "Arial Black", Helvetica, sans-serif;
+	letter-spacing: -8px;
+	color: #676566;
+	margin-left: 10px;
+}
+
+#site-header span {
+	color: #34333b;
+}
