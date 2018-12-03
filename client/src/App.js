@@ -10,40 +10,40 @@ import Project from './Project';
 // profile/userid/project_id
 
 class App extends Component {
+  constructor(props) {
+      super(props);
+  }
+
+  logout() {
+    sessionStorage.clear();
+  }
+
   render() {
     let isLoggedIn = sessionStorage.getItem('loggedIn') == "true";
+
     return (
       <div className="App">
         <div className="craft-navbar">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" to="/">Craft Home</Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light ">
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/signup">Sign Up</Link>
-                </li>
-                { !isLoggedIn ? (
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/login">Log In</Link>
-                    </li>
-                  ) : (
+                { !isLoggedIn ? ( //Navbar if user not logged in
+                  <div>
+                    <span className="nav navbar-brand navbar-left">Welcome! Please <Link className="nav-link" id="inline" to="/login">Log In</Link> or <Link className="nav-link" id="inline" to="/signup">Sign Up</Link>.</span>
+                    </div>
+                  ) : ( //Navbar if user is logged in
                     <div>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="#">Hello {sessionStorage.getItem('username')}</Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>Profile</Link>
-                      </li>
+                      <span className="nav navbar-brand navbar-left">Hello, {sessionStorage.getItem('username')}!</span>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>Profile</Link></li>
+                        <li><Link className="nav-link" onClick={() => {   this.logout();}} to="/">Log Out</Link></li>
+                      </ul>
                     </div>
                   )                    
                 }
-              </ul>
             </div>
           </nav>
         </div>
+
         <div className="main-content">
         <Switch>
           <Route exact={true} path="/" component={Home}/>

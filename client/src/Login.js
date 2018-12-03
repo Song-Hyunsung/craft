@@ -23,6 +23,34 @@ export default class Login extends Component {
     this.setState({ password: event.target.value });
   }
 
+  authenticate(username, password, cb){
+   fetch('/api/login', {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json; charset=utf-8",
+     },
+     body: JSON.stringify({
+       username: username,
+       password: password,
+     }),
+   }).then(response => {
+     if(response.status === 200){
+       console.log("Correct Credentials");
+       return response.json();
+     } 
+   }).then(body => {
+     console.log(body.username);
+     console.log(body.id);
+     sessionStorage.setItem('id', body.id);
+     sessionStorage.setItem('username', body.username);
+     sessionStorage.setItem('loggedIn', "true");
+     cb(sessionStorage.getItem('loggedIn'));
+   }).catch(() => {
+     console.log("Wrong Credentials");
+     cb(sessionStorage.getItem('loggedIn'));
+   })
+  }
+
   handleLogin = (event) => {
     if(event === "true"){
       this.setState({ isloggedIn: true });
@@ -30,7 +58,7 @@ export default class Login extends Component {
   }
 
   login = () => {
-    authenticationObject.authenticate(this.state.username, this.state.password, this.handleLogin);
+    this.authenticate(this.state.username, this.state.password, this.handleLogin);
   }
 
   render() {
@@ -50,34 +78,4 @@ export default class Login extends Component {
       </div>
     );
   }
-}
-
-const authenticationObject = {
-  authenticate(username, password, cb){
-    fetch('/api/login', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    }).then(response => {
-      if(response.status === 200){
-        console.log("Correct Credentials");
-        return response.json();
-      } 
-    }).then(body => {
-      console.log(body.username);
-      console.log(body.id);
-      sessionStorage.setItem('id', body.id);
-      sessionStorage.setItem('username', body.username);
-      sessionStorage.setItem('loggedIn', "true");
-      cb(sessionStorage.getItem('loggedIn'));
-    }).catch(() => {
-      console.log("Wrong Credentials");
-      cb(sessionStorage.getItem('loggedIn'));
-    })
-  },
 }
