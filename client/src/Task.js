@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
-
+	
 class Task extends Component {
 	constructor(props){
 		super(props);
