@@ -6,7 +6,7 @@ class ProjectList extends Component {
 		super(props);
 
 		this.state = {
-			projects: [null]
+			projects: []
 		};
 	};
 
@@ -19,10 +19,8 @@ class ProjectList extends Component {
 				"Content-Type" : "application/json; charset=utf-8",
 			},
 		}).then(response => {
-			console.log(response);
 			return response.json();
 		}).then(body => {
-			console.log(body.project);
 			this.setState({ projects: body.project });
 		}).catch(() => {
 			console.log("Error retreving projects");
@@ -31,17 +29,9 @@ class ProjectList extends Component {
 
 	render(){
 		let renderedProjects = this.state.projects.map((prj, index) => {
-			console.log(prj);
-			if(prj === null){
-				return(
-					<p key={index}> Loading Projects </p>
-				)
-			} else {
-				return(
-					<Project key={index} {...prj} />
-				)
-			}
-
+			return(
+				<Project key={prj.id} {...prj} />
+			)
 		})
 
 	   	return(
