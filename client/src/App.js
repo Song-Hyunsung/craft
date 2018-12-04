@@ -3,11 +3,8 @@ import { Link, Route, Redirect, Switch} from 'react-router-dom';
 import Home from './Home';
 import Signup from './Signup';
 import Login from './Login';
-import Profile from './Profile';
-import Project from './Project';
-//import  from './';
-// profile/userid (this is where all projects are shown)
-// profile/userid/project_id
+import ProjectList from './ProjectList';
+import TaskList from './TaskList';
 
 class App extends Component {
   constructor(props) {
@@ -49,8 +46,8 @@ class App extends Component {
           <Route exact={true} path="/" component={Home}/>
           <Route exact={true} path="/signup" component={Signup}/>
           <Route exact={true} path="/login" component={Login}/>
-          <Route exact={true} path="/profile/:userid" component={Profile}/>
-          <Route exact={true} path="/profile/:userid/:projectid" component={Project}/>
+          <Route exact={true} path="/profile/:userid" component={ProjectList}/>
+          <Route exact={true} path="/profile/:userid/:projectid" component={TaskList}/>
           </Switch>
         </div>
 
