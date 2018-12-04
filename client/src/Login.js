@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { PageHeader, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "./Login.css";
 
 
@@ -62,20 +62,63 @@ export default class Login extends Component {
   }
 
   render() {
-
     if(this.state.isloggedIn){
       return <Redirect to={"/profile/" + sessionStorage.getItem('id')} />;
     }
 
     return (
       <div>
-        <PageHeader><center>Login</center></PageHeader>
+        <PageHeader><center>Log In</center></PageHeader>
         <div className="Login">
-          <input type="text" placeholder="Username" value={this.state.username} onChange={this.usernameChanged} />
-          <input type="text" placeholder="Password" value={this.state.password} onChange={this.passwordChanged} />
-          <button onClick={this.login}> Log in </button>
+
+          <form>
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Username</ControlLabel>
+              <FormControl
+                autoFocus
+                type="text"
+                value={this.state.username}
+                onChange={this.usernameChanged}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                value={this.state.password}
+                onChange={this.passwordChanged}
+                type="password"
+              />
+            </FormGroup>
+            <Button
+              block
+              bsSize="large"
+              onClick={this.login}
+            >
+              Log In
+            </Button>
+          </form>
         </div>
       </div>
+
+
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

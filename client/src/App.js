@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
-import { Link, Route, Redirect, Switch} from 'react-router-dom';
+import { Link, Route, Switch} from 'react-router-dom';
 import Home from './Home';
 import Signup from './Signup';
 import Login from './Login';
 import ProjectList from './ProjectList';
 import TaskList from './TaskList';
 
-class App extends Component {
-  constructor(props) {
-      super(props);
-  }
+export default class App extends Component {
 
   logout() {
     sessionStorage.clear();
   }
 
   render() {
-    let isLoggedIn = sessionStorage.getItem('loggedIn') == "true";
+    let isLoggedIn = sessionStorage.getItem('loggedIn') === "true";
 
     return (
       <div className="App">
@@ -25,14 +22,18 @@ class App extends Component {
             <div className="collapse navbar-collapse" id="navbarNav">
                 { !isLoggedIn ? ( //Navbar if user not logged in
                   <div>
-                    <span className="nav navbar-brand navbar-left">Welcome! Please <Link className="nav-link" id="inline" to="/login">Log In</Link> or <Link className="nav-link" id="inline" to="/signup">Sign Up</Link>.</span>
-                    </div>
+                    <span className="nav navbar-brand navbar-left">Welcome guest! Log in or sign up to start Crafting!</span>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><Link className="nav-link" to={"/login/"}>Log In</Link></li>
+                        <li><Link className="nav-link" to={"/signup/"}>Sign Up</Link></li>
+                      </ul>
+                  </div>
                   ) : ( //Navbar if user is logged in
                     <div>
                       <span className="nav navbar-brand navbar-left">Hello, {sessionStorage.getItem('username')}!</span>
                       <ul className="nav navbar-nav navbar-right">
                         <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>Profile</Link></li>
-                        <li><Link className="nav-link" onClick={() => {   this.logout();}} to="/">Log Out</Link></li>
+                        <li><Link className="nav-link" onClick={() => {this.logout();}} to="/">Log Out</Link></li>
                       </ul>
                     </div>
                   )                    
@@ -56,5 +57,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

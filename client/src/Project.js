@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Panel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import "./Project.css";
 
 class Project extends Component {
 	constructor(props){
@@ -28,14 +31,20 @@ class Project extends Component {
 
 	render(){
 		return(
-			<ul>
-				<li> User ID Associated with this project: {this.state.userId} </li>
-				<li> Project ID: {this.state.projectId} </li>
-				<li> Project Title: {this.state.projectTitle} </li>
-				<li> Project Description: {this.state.projectDescription} </li>
-				<li> Project is created at: {this.state.createdAt} </li>
-				<li> Project is updated at: {this.state.updatedAt} </li>
-			</ul>
+			<Panel>
+				<Panel.Heading>
+					<Link to={"/profile/" + this.state.userId + "/" + this.state.projectId}>
+						<b>Project Title: {this.state.projectTitle}</b>
+					</Link>
+				</Panel.Heading>
+				<Panel.Body>
+					<b>Project ID</b>: {this.state.projectId} <br />
+					<b>Created at</b>: {this.state.createdAt} <br />
+					<b>Associated User ID</b>: {this.state.userId} <br />
+					<b>Project Description</b>: {this.state.projectDescription} <br />
+				</Panel.Body>
+ 				<Panel.Footer><i>Last updated: {this.state.updatedAt}</i></Panel.Footer>
+			</Panel>
 		)
 	}
 }

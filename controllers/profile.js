@@ -107,7 +107,8 @@ router.get('/:id/:project_id',
 			}).then((task) => {
 				res.json({
 					msg : "Here are all task associated with project id " + project.id,
-					task
+					task,
+					projectTitle : project.projectTitle
 				});
 			});
 		});

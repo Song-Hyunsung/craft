@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Project from './Project'
+import { PageHeader } from "react-bootstrap";
+import "./ProjectList.css";
 
 class ProjectList extends Component {
 	constructor(props){
@@ -23,7 +25,7 @@ class ProjectList extends Component {
 		}).then(body => {
 			this.setState({ projects: body.project });
 		}).catch(() => {
-			console.log("Error retreving projects");
+			console.log("Error retrieving projects");
 		})
 	}
 
@@ -36,8 +38,10 @@ class ProjectList extends Component {
 
 	   	return(
 	   		<div>
-	   			<h1> Projects for {sessionStorage.getItem('username')} </h1>
-	   			{renderedProjects}
+	   			<PageHeader><center>{sessionStorage.getItem('username')}'s Projects</center></PageHeader>
+	   			<div id="content-margin">
+	   				{renderedProjects.length > 0 ? renderedProjects : <div><center>You have no projects to display!</center></div>}
+	   			</div>
 	   		</div>
 		)
 	}
