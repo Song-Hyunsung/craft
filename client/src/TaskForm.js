@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { PageHeader, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
 import "./ProjectForm.css";
 
-class ProjectForm extends Component {
+class TaskForm extends Component {
 	constructor(props){
 		super(props);
 
@@ -11,7 +10,6 @@ class ProjectForm extends Component {
 			title: "",
 			description: "",
 			done: false,
-			projectId: null,
 		}
 	}
 
@@ -23,55 +21,55 @@ class ProjectForm extends Component {
 		this.setState({ description: event.target.value });
 	}
 
-	addNewProject(cb){
-		fetch('/api/profile/' + sessionStorage.getItem('id'), {
+	addNewTask(cb){
+		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.props.projectId, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
 			body: JSON.stringify({
-				projectTitle: this.state.title,
-				projectDescription: this.state.description,
+				taskTitle: this.state.title,
+				taskDescription: this.state.description,
 			}),
 		}).then(response => {
 			if(response.status === 200){
-				console.log("Creating New Project");
-				return response.json();
-			}
-		}).then(body => {
-			cb(body.project.id);
-		}).catch(() => {
-			console.log("Error creating new project");
-		})
-	}
-
-	updateProject(cb){
-		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.props.updateProjectId, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-			},
-			body: JSON.stringify({
-				projectTitle: this.state.title,
-				projectDescription: this.state.description,
-			}),
-		}).then(response => {
-			if(response.status === 200){
-				console.log("Updating Project");
+				console.log("Creating New Task");
 				return response.json();
 			}
 		}).then(body => {
 			cb();
 		}).catch(() => {
-			console.log("Error updating project");
+			console.log("Error creating new Task");
 		})
 	}
 
-	handleSubmit = (projectId) => {
-		this.setState({ 
+	updateTask(cb){
+		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.props.updateProjectId + '/' + this.props.updateTaskId, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			body: JSON.stringify({
+				taskTitle: this.state.title,
+				taskDescription: this.state.description,
+			}),
+		}).then(response => {
+			if(response.status === 200){
+				console.log("Updating Task");
+				return response.json();
+			}
+		}).then(body => {
+			cb();
+		}).catch(() => {
+			console.log("Error updating Task");
+		})
+	}
+
+	handleSubmit = () => {
+		this.setState({
 			done: true,
-			projectId: projectId, 
-		});
+		})
+		window.location.reload();
 	}
 
 	handleUpdate = () => {
@@ -79,21 +77,18 @@ class ProjectForm extends Component {
 	}
 
 	submit = () => {
-		this.addNewProject(this.handleSubmit);
+		this.addNewTask(this.handleSubmit);
 	}
 
 	update = () => {
-		this.updateProject(this.handleUpdate);
+		this.updateTask(this.handleUpdate);
 	}
 
 	render(){
-		if(this.state.done && this.state.projectId != null){
-        	return <Redirect to={"/profile/" + sessionStorage.getItem('id') + "/" + this.state.projectId} />;
-		}
 
 		return(
 	        <div className='popup'>
-	          <PageHeader><center>{this.props.type} Project</center></PageHeader>
+	          <PageHeader><center>{this.props.type} Task</center></PageHeader>
 	          <div className="Login">
 
 	            <form>
@@ -140,4 +135,4 @@ class ProjectForm extends Component {
 	}
 }
 
-export default ProjectForm;
+export default TaskForm;

@@ -75,7 +75,7 @@ class Project extends Component {
 				</Panel.Body>
  				<Panel.Footer>
  					<i>Last updated: {this.state.updatedAt}</i>
- 					<button onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</button>
+ 					<button onClick={() => this.deleteProject(this.refreshPage)}>Delete project</button>
 	 	   			<button onClick={() => this.togglePopup()}>Update Project</button>
 		   			{this.state.showPopup ?
 		   				<ProjectForm

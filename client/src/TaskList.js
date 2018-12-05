@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PageHeader } from "react-bootstrap";
 import Task from './Task';
+import TaskForm from './TaskForm';
 
 class TaskList extends Component {
 	constructor(props){
@@ -8,7 +9,8 @@ class TaskList extends Component {
 
 		this.state = {
 			tasks: [],
-			projectName: ""
+			projectName: "",
+			showPopup: false,
 		}
 	}
 
@@ -28,6 +30,12 @@ class TaskList extends Component {
 		})
 	}
 
+	togglePopup = (event) => {
+		this.setState({
+			showPopup: !this.state.showPopup
+		});
+	}
+
 	render(){
 		let renderedTasks = this.state.tasks.map((task, index) => {
 			return(
@@ -38,6 +46,14 @@ class TaskList extends Component {
 		return(
 			<div>
 	   			<PageHeader><center>Tasks for {this.state.projectName}</center></PageHeader>
+	   			<button onClick={() => this.togglePopup()}>Add New Task</button>
+	   			{this.state.showPopup ?
+	   				<TaskForm
+	   					type='Add'
+	   					projectId={this.props.match.params.projectid}
+	   					closePopup={() => this.togglePopup()}
+	   				/> : null
+	   			}
 	   			<div id="content-margin">
 	   				{renderedTasks.length > 0 ? renderedTasks : <div><center>You have no tasks to display!</center></div>}
 	   			</div>
