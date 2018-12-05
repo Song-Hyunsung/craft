@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Project from './Project'
 import ProjectForm from './ProjectForm'
 import { PageHeader } from "react-bootstrap";
+import { Button } from 'muicss/react';
 import "./ProjectList.css";
 
 class ProjectList extends Component {
@@ -47,15 +48,20 @@ class ProjectList extends Component {
 	   	return(
 	   		<div>
 	   			<PageHeader><center>{sessionStorage.getItem('username')}'s Projects</center></PageHeader>
-	   			<button onClick={() => this.togglePopup()}>Add New Project</button>
+	   			{renderedProjects.length === 0 ? <div><center>You have no projects to display.</center></div> : null }
+
+	   			<center><Button variant="raised" color="primary" onClick={() => this.togglePopup()}>Create New Project</Button></center>
+	   			<br />
+
 	   			{this.state.showPopup ?
 	   				<ProjectForm
-	   					type='Add'
+	   					type='Create'
 	   					closePopup={() => this.togglePopup()}
 	   				/> : null
 	   			}
+
 	   			<div id="content-margin">
-	   				{renderedProjects.length > 0 ? renderedProjects : <div><center>You have no projects to display!</center></div>}
+	   				{renderedProjects}
 	   			</div>
 	   		</div>
 		)

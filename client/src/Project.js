@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ProjectForm from './ProjectForm'
+import { Button } from 'muicss/react';
 import "./Project.css";
 
 class Project extends Component {
@@ -69,14 +70,14 @@ class Project extends Component {
 				</Panel.Heading>
 				<Panel.Body>
 					<b>Project ID</b>: {this.state.projectId} <br />
-					<b>Created at</b>: {this.state.createdAt} <br />
 					<b>Associated User ID</b>: {this.state.userId} <br />
+					<b>Created at</b>: {this.state.createdAt} <br />
+					<b>Last updated</b>: {this.state.updatedAt} <br />
 					<b>Project Description</b>: {this.state.projectDescription} <br />
 				</Panel.Body>
  				<Panel.Footer>
- 					<i>Last updated: {this.state.updatedAt}</i>
- 					<button onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</button>
-	 	   			<button onClick={() => this.togglePopup()}>Update Project</button>
+ 					<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update Project</Button>
+ 					<Button variant="raised" color="danger" size="small" onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</Button>
 		   			{this.state.showPopup ?
 		   				<ProjectForm
 		   					type='Update'
