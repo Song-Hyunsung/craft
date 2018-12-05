@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
-	
+import TaskForm from './TaskForm';
+
 class Task extends Component {
 	constructor(props){
 		super(props);
@@ -11,7 +12,8 @@ class Task extends Component {
 			taskTitle: null,
 			taskDescription: null,
 			createdAt: null,
-			updatedAt: null
+			updatedAt: null,
+			showPopup: false,
 		}
 	}
 
@@ -27,6 +29,34 @@ class Task extends Component {
 		})
 	}
 
+	deleteTask(cb){
+		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.state.projectId + '/' + this.state.taskId, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+		}).then(response => {
+			if(response.status === 200){
+				console.log("Succesfully deleted task");
+			}
+		}).then(() => {
+			cb();
+		}).catch(() => {
+			console.log("Error deleting task");
+			cb();
+		})
+	}
+
+	refreshPage(){
+		window.location.reload();
+	}
+
+	togglePopup = (event) => {
+		this.setState({
+			showPopup: !this.state.showPopup
+		});
+	}
+
 	render(){
 		return(
 			<Panel>
@@ -37,7 +67,19 @@ class Task extends Component {
 					<b>Associated Project ID</b>: {this.state.projectId} <br />
 					<b>Task Description</b>: {this.state.taskDescription} <br />
 				</Panel.Body>
- 				<Panel.Footer><i>Last updated: {this.state.updatedAt}</i></Panel.Footer>
+ 				<Panel.Footer>
+ 					<i>Last updated: {this.state.updatedAt}</i>
+ 					<button onClick={() => this.deleteTask(this.refreshPage)}>Delete Task</button>
+	 	   			<button onClick={() => this.togglePopup()}>Update Task</button>
+		   			{this.state.showPopup ?
+		   				<TaskForm
+		   					type='Update'
+		   					updateProjectId={this.state.projectId}
+		   					updateTaskId={this.state.taskId}
+		   					closePopup={() => this.togglePopup()}
+		   				/> : null
+		   			}
+ 				</Panel.Footer>
 			</Panel>
 		)
 	}
