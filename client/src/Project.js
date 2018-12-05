@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import ProjectForm from './ProjectForm'
 import "./Project.css";
 
 class Project extends Component {
@@ -13,7 +14,8 @@ class Project extends Component {
 			projectTitle: null,
 			projectDescription: null,
 			createdAt: null,
-			updatedAt: null
+			updatedAt: null,
+			showPopup: false,
 		}
 	}
 
@@ -27,6 +29,34 @@ class Project extends Component {
 			createdAt: createdAt,
 			updatedAt: updatedAt
 		})
+	}
+
+	deleteProject(cb){
+		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.state.projectId, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+		}).then(response => {
+			if(response.status === 200){
+				console.log("Succesfully deleted project");
+			}
+		}).then(() => {
+			cb();
+		}).catch(() => {
+			console.log("Error deleting project");
+			cb();
+		})
+	}
+
+	refreshPage(){
+		window.location.reload();
+	}
+
+	togglePopup = (event) => {
+		this.setState({
+			showPopup: !this.state.showPopup
+		});
 	}
 
 	render(){
@@ -43,7 +73,18 @@ class Project extends Component {
 					<b>Associated User ID</b>: {this.state.userId} <br />
 					<b>Project Description</b>: {this.state.projectDescription} <br />
 				</Panel.Body>
- 				<Panel.Footer><i>Last updated: {this.state.updatedAt}</i></Panel.Footer>
+ 				<Panel.Footer>
+ 					<i>Last updated: {this.state.updatedAt}</i>
+ 					<button onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</button>
+	 	   			<button onClick={() => this.togglePopup()}>Update Project</button>
+		   			{this.state.showPopup ?
+		   				<ProjectForm
+		   					type='Update'
+		   					updateProjectId={this.state.projectId}
+		   					closePopup={() => this.togglePopup()}
+		   				/> : null
+		   			}
+ 				</Panel.Footer>
 			</Panel>
 		)
 	}

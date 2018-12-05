@@ -72,7 +72,7 @@ export default class Login extends Component {
         <div className="Login">
 
           <form>
-            <FormGroup controlId="email" bsSize="large">
+            <FormGroup controlId="username" bsSize="large">
               <ControlLabel>Username</ControlLabel>
               <FormControl
                 autoFocus

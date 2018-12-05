@@ -48,8 +48,6 @@ router.post('/:id',
 			}).catch(() => {
 				res.status(400).json({ msg: "Error creating project for user " + user.username });
 			});
-		}).catch(() => {
-			res.status(400).json({ msg: "Cannot find user with id " + req.params.id });
 		});
 	});
 
