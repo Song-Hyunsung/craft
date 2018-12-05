@@ -15,6 +15,15 @@ class ProjectForm extends Component {
 		}
 	}
 
+	componentWillMount(){
+		if(this.props.type === "Update"){
+			this.setState({
+				title: this.props.pastTitle,
+				description: this.props.pastDescription
+			})
+		}
+	}
+
 	titleChanged = (event) => {
 		this.setState({ title: event.target.value });
 	}

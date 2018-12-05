@@ -82,6 +82,8 @@ class Project extends Component {
 		   					type='Update'
 		   					updateProjectId={this.state.projectId}
 		   					closePopup={() => this.togglePopup()}
+		   					pastTitle={this.state.projectTitle}
+		   					pastDescription={this.state.projectDescription}
 		   				/> : null
 		   			}
  				</Panel.Footer>

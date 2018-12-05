@@ -76,6 +76,8 @@ class Task extends Component {
 		   					type='Update'
 		   					updateProjectId={this.state.projectId}
 		   					updateTaskId={this.state.taskId}
+		   					pastTitle={this.state.taskTitle}
+		   					pastDescription={this.state.taskDescription}
 		   					closePopup={() => this.togglePopup()}
 		   				/> : null
 		   			}
