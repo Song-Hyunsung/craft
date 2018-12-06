@@ -32,7 +32,7 @@ export default class App extends Component {
                     <div>
                       <span className="nav navbar-brand navbar-left">Hello, {sessionStorage.getItem('username')}!</span>
                       <ul className="nav navbar-nav navbar-right">
-                        <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>Profile</Link></li>
+                        <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>My Projects</Link></li>
                         <li><Link className="nav-link" onClick={() => {this.logout();}} to="/">Log Out</Link></li>
                       </ul>
                     </div>

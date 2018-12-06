@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { PageHeader, FormGroup, FormControl, ControlLabel, Modal } from "react-bootstrap";
-import { Form, Input, Textarea, Button } from 'muicss/react';
+import { Modal } from "react-bootstrap";
+import { Form, Input, Button } from 'muicss/react';
 import { Redirect } from "react-router-dom";
-import "./ProjectForm.css";
 
 class ProjectForm extends Component {
 	constructor(props){
@@ -15,6 +14,15 @@ class ProjectForm extends Component {
 			projectId: null,
 		}
 	}
+
+	componentWillMount(){
+ 		if(this.props.type === "Update"){
+ 			this.setState({
+ 				title: this.props.pastTitle,
+ 				description: this.props.pastDescription
+ 			})
+ 		}
+ 	}
 
 	titleChanged = (event) => {
 		this.setState({ title: event.target.value });
