@@ -77,7 +77,7 @@ class TaskList extends Component {
 		   				<ProjectForm
 		   					type='Update'
 		   					updateProjectId={this.state.projectId}
-		   					closePopup={() => this.togglePopup()}
+		   					closePopup={() => this.togglePPopup()}
 		   					pastTitle={this.state.projectName}
 		   					pastDescription={this.state.projectDescription}
 		   				/> : null
@@ -85,9 +85,9 @@ class TaskList extends Component {
 	   			</Panel>
 
 	   			<Tabs justified={true}>
-	   				<Tab value="pane-1" label="Incomplete Tasks">
+	   				<Tab value="pane-1" label="Open Tasks">
 
-			   			{renderedTasks.length === 0 ? <div><br /><center>You have no tasks to display.</center></div> : null }
+			   			{renderedTasks.length === 0 ? <div><br /><center>You have no open tasks.</center></div> : null }
 
 			   			<center><Button variant="raised" color="primary" onClick={() => this.togglePopup()}>Add New Task</Button></center>
 			   			<br />
