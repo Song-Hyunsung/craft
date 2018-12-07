@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Project from './Project'
 import ProjectForm from './ProjectForm'
 import { PageHeader } from "react-bootstrap";
-import "./ProjectList.css";
+import { Button, Tab, Tabs } from 'muicss/react';
 
 class ProjectList extends Component {
 	constructor(props){
@@ -47,16 +47,30 @@ class ProjectList extends Component {
 	   	return(
 	   		<div>
 	   			<PageHeader><center>{sessionStorage.getItem('username')}'s Projects</center></PageHeader>
-	   			<button onClick={() => this.togglePopup()}>Add New Project</button>
-	   			{this.state.showPopup ?
-	   				<ProjectForm
-	   					type='Add'
-	   					closePopup={() => this.togglePopup()}
-	   				/> : null
-	   			}
-	   			<div id="content-margin">
-	   				{renderedProjects.length > 0 ? renderedProjects : <div><center>You have no projects to display!</center></div>}
-	   			</div>
+
+	   			<Tabs justified={true}>
+	   				<Tab value="pane-1" label="Ongoing Projects">
+			   			{renderedProjects.length === 0 ? <div><br /><center>You have no projects to display.</center></div> : null }
+
+			   			<br />
+			   			<center><Button variant="raised" color="primary" onClick={() => this.togglePopup()}>Create New Project</Button></center>
+			   			<br />
+
+			   			{this.state.showPopup ?
+			   				<ProjectForm
+			   					type='Create'
+			   					closePopup={() => this.togglePopup()}
+			   				/> : null
+			   			}
+
+			   			<div id="content-margin">
+			   				{renderedProjects}
+			   			</div>
+			   		</Tab>
+			   		<Tab value="pane-2" label="Archived Projects">
+			   			<div><br /><center>You have no archived projects.</center></div> 
+			   		</Tab>
+		   		</Tabs>
 	   		</div>
 		)
 	}

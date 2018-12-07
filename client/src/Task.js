@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
 import TaskForm from './TaskForm';
+import { Button } from 'muicss/react';
 
 class Task extends Component {
 	constructor(props){
@@ -63,21 +64,22 @@ class Task extends Component {
 				<Panel.Heading><b>Task: {this.state.taskTitle}</b></Panel.Heading>
 				<Panel.Body>
 					<b>Task ID</b>: {this.state.taskId} <br />
-					<b>Created at</b>: {this.state.createdAt} <br />
 					<b>Associated Project ID</b>: {this.state.projectId} <br />
+					<b>Created at</b>: {this.state.createdAt} <br />
+					<b>Last updated at</b>: {this.state.updatedAt} <br />
 					<b>Task Description</b>: {this.state.taskDescription} <br />
 				</Panel.Body>
  				<Panel.Footer>
- 					<i>Last updated: {this.state.updatedAt}</i>
- 					<button onClick={() => this.deleteTask(this.refreshPage)}>Delete Task</button>
-	 	   			<button onClick={() => this.togglePopup()}>Update Task</button>
+ 					<Button variant="raised" size="small" onClick={() => this.togglePopup()}>Update Task</Button>
+ 					<Button variant="raised" color="primary" size="small" disabled={true}>Complete Task</Button>
+ 					<Button variant="raised" color="danger" size="small" onClick={() => this.deleteTask(this.refreshPage)}>Delete this task</Button>
 		   			{this.state.showPopup ?
 		   				<TaskForm
 		   					type='Update'
 		   					updateProjectId={this.state.projectId}
 		   					updateTaskId={this.state.taskId}
 		   					pastTitle={this.state.taskTitle}
-		   					pastDescription={this.state.taskDescription}
+ 		   					pastDescription={this.state.taskDescription}
 		   					closePopup={() => this.togglePopup()}
 		   				/> : null
 		   			}

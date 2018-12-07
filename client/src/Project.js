@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import ProjectForm from './ProjectForm'
-import "./Project.css";
+import ProjectForm from './ProjectForm';
+import { Button } from 'muicss/react';
 
 class Project extends Component {
 	constructor(props){
@@ -61,6 +61,7 @@ class Project extends Component {
 
 	render(){
 		return(
+			<div>
 			<Panel>
 				<Panel.Heading>
 					<Link to={"/profile/" + this.state.userId + "/" + this.state.projectId}>
@@ -69,14 +70,15 @@ class Project extends Component {
 				</Panel.Heading>
 				<Panel.Body>
 					<b>Project ID</b>: {this.state.projectId} <br />
-					<b>Created at</b>: {this.state.createdAt} <br />
 					<b>Associated User ID</b>: {this.state.userId} <br />
+					<b>Created at</b>: {this.state.createdAt} <br />
+					<b>Last updated at</b>: {this.state.updatedAt} <br />
 					<b>Project Description</b>: {this.state.projectDescription} <br />
 				</Panel.Body>
  				<Panel.Footer>
- 					<i>Last updated: {this.state.updatedAt}</i>
- 					<button onClick={() => this.deleteProject(this.refreshPage)}>Delete project</button>
-	 	   			<button onClick={() => this.togglePopup()}>Update Project</button>
+ 					<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update Project</Button>
+ 					<Button variant="raised" color="primary" size="small" disabled={true}>Archive Project</Button>
+ 					<Button variant="raised" color="danger" size="small" onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</Button>
 		   			{this.state.showPopup ?
 		   				<ProjectForm
 		   					type='Update'
@@ -88,6 +90,7 @@ class Project extends Component {
 		   			}
  				</Panel.Footer>
 			</Panel>
+			</div>
 		)
 	}
 }

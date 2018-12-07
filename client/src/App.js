@@ -22,7 +22,7 @@ export default class App extends Component {
             <div className="collapse navbar-collapse" id="navbarNav">
                 { !isLoggedIn ? ( //Navbar if user not logged in
                   <div>
-                    <span className="nav navbar-brand navbar-left">Welcome guest! Log in or sign up to start Crafting!</span>
+                    <span className="nav navbar-brand navbar-left">Welcome, guest! Log in or sign up to start Crafting.</span>
                       <ul className="nav navbar-nav navbar-right">
                         <li><Link className="nav-link" to={"/login/"}>Log In</Link></li>
                         <li><Link className="nav-link" to={"/signup/"}>Sign Up</Link></li>
@@ -32,7 +32,7 @@ export default class App extends Component {
                     <div>
                       <span className="nav navbar-brand navbar-left">Hello, {sessionStorage.getItem('username')}!</span>
                       <ul className="nav navbar-nav navbar-right">
-                        <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>Profile</Link></li>
+                        <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>My Projects</Link></li>
                         <li><Link className="nav-link" onClick={() => {this.logout();}} to="/">Log Out</Link></li>
                       </ul>
                     </div>

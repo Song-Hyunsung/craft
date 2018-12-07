@@ -106,7 +106,12 @@ router.get('/:id/:project_id',
 				res.json({
 					msg : "Here are all task associated with project id " + project.id,
 					task,
-					projectTitle : project.projectTitle
+					projectTitle : project.projectTitle,
+					userId: project.UserId,
+					projectId: project.id,
+					projectDescription: project.projectDescription,
+					createdAt: project.createdAt,
+					updatedAt: project.updatedAt
 				});
 			});
 		});

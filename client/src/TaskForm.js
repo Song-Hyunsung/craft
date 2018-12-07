@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { PageHeader, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./ProjectForm.css";
+import { Modal } from "react-bootstrap";
+import { Form, Input, Button } from 'muicss/react';
 
 class TaskForm extends Component {
 	constructor(props){
@@ -14,13 +14,13 @@ class TaskForm extends Component {
 	}
 
 	componentWillMount(){
-		if(this.props.type === "Update"){
-			this.setState({
-				title: this.props.pastTitle,
-				description: this.props.pastDescription
-			})
-		}
-	}
+ 		if(this.props.type === "Update"){
+ 			this.setState({
+ 				title: this.props.pastTitle,
+ 				description: this.props.pastDescription
+ 			})
+ 		}
+ 	}
 
 	titleChanged = (event) => {
 		this.setState({ title: event.target.value });
@@ -96,50 +96,44 @@ class TaskForm extends Component {
 	render(){
 
 		return(
-	        <div className='popup'>
-	          <PageHeader><center>{this.props.type} Task</center></PageHeader>
-	          <div className="Login">
 
-	            <form>
-	              <FormGroup controlId="title" bsSize="large">
-	                <ControlLabel>Title</ControlLabel>
-	                <FormControl
-	                  autoFocus
-	                  type="text"
-	                  value={this.state.title}
-	                  onChange={this.titleChanged}
-	                />
-	              </FormGroup>
-	              <FormGroup controlId="description" bsSize="large">
-	                <ControlLabel>Description</ControlLabel>
-	                <FormControl
-	                  value={this.state.description}
-	                  onChange={this.descriptionChanged}
-	                  type="text"
-	                />
-	              </FormGroup>
-	              { this.props.type === "Add" ?
-		              <Button
-		                block
-		                bsSize="large"
-		                onClick={() => this.submit()}
-		              >
-		                Add
-		              </Button>
-		              :
-		              <Button
-		                block
-		                bsSize="large"
-		                onClick={() => this.update()}
-		              >
-		                Update
-		              </Button>
-		           }
-	              <Button block bsSize="large" onClick={this.props.closePopup}>Close</Button>
-	            </form>
-	          </div>
+			<div>
+				<Modal show="true">
+		          <Modal.Header>
+		            <Modal.Title>
+		              {this.props.type} Task
+		            </Modal.Title>
+		          </Modal.Header>
+		          <Modal.Body>
+		            <Form>
+		            	<Input label="Task Title" onChange={this.titleChanged} defaultValue={this.state.title} />
+        				<Input label="Task Description" onChange={this.descriptionChanged} defaultValue={this.state.description} />
+		            </Form>
+		          </Modal.Body>
+		          <Modal.Footer>
+		          	<div>
+			          { this.props.type === "Add" ?
+			              <Button
+			                variant="raised" color="primary"
+			                onClick={() => this.submit()}
+			              >
+			                Add
+			              </Button>
+			              :
+			              <Button
+			                variant="raised" color="primary"
+			                onClick={() => this.update()}
+			              >
+			                Update
+			              </Button>
+			           }
+			          </div>
+			          <div>
+		            <Button variant="raised" onClick={this.props.closePopup}>Close</Button>
+		            </div>
+		          </Modal.Footer>
+		        </Modal>
 	        </div>
-
 		)
 	}
 }

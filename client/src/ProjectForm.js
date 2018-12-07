@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { PageHeader, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import { Form, Input, Button } from 'muicss/react';
 import { Redirect } from "react-router-dom";
-import "./ProjectForm.css";
 
 class ProjectForm extends Component {
 	constructor(props){
@@ -16,13 +16,13 @@ class ProjectForm extends Component {
 	}
 
 	componentWillMount(){
-		if(this.props.type === "Update"){
-			this.setState({
-				title: this.props.pastTitle,
-				description: this.props.pastDescription
-			})
-		}
-	}
+ 		if(this.props.type === "Update"){
+ 			this.setState({
+ 				title: this.props.pastTitle,
+ 				description: this.props.pastDescription
+ 			})
+ 		}
+ 	}
 
 	titleChanged = (event) => {
 		this.setState({ title: event.target.value });
@@ -101,50 +101,46 @@ class ProjectForm extends Component {
 		}
 
 		return(
-	        <div className='popup'>
-	          <PageHeader><center>{this.props.type} Project</center></PageHeader>
-	          <div className="Login">
 
-	            <form>
-	              <FormGroup controlId="title" bsSize="large">
-	                <ControlLabel>Title</ControlLabel>
-	                <FormControl
-	                  autoFocus
-	                  type="text"
-	                  value={this.state.title}
-	                  onChange={this.titleChanged}
-	                />
-	              </FormGroup>
-	              <FormGroup controlId="description" bsSize="large">
-	                <ControlLabel>Description</ControlLabel>
-	                <FormControl
-	                  value={this.state.description}
-	                  onChange={this.descriptionChanged}
-	                  type="text"
-	                />
-	              </FormGroup>
-	              { this.props.type === "Add" ?
-		              <Button
-		                block
-		                bsSize="large"
-		                onClick={() => this.submit()}
-		              >
-		                Add
-		              </Button>
-		              :
-		              <Button
-		                block
-		                bsSize="large"
-		                onClick={() => this.update()}
-		              >
-		                Update
-		              </Button>
-		           }
-	              <Button block bsSize="large" onClick={this.props.closePopup}>Close</Button>
-	            </form>
-	          </div>
+			<div>
+				<Modal show="true">
+		          <Modal.Header>
+		            <Modal.Title>
+		              {this.props.type} Project
+		            </Modal.Title>
+		          </Modal.Header>
+		          <Modal.Body>
+		            <Form>
+		            	<Input label="Project Title" onChange={this.titleChanged} defaultValue={this.state.title} />
+        				<Input label="Project Description" onChange={this.descriptionChanged} defaultValue={this.state.description} />
+		            </Form>
+		          </Modal.Body>
+		          <Modal.Footer>
+		          	<div>
+			          { this.props.type === "Create" ?
+			              <Button
+			                variant="raised" color="primary"
+			                onClick={() => this.submit()}
+			              >
+			                Create
+			              </Button>
+			              :
+			              <Button
+			                variant="raised" color="primary"
+			                onClick={() => this.update()}
+			              >
+			                Update
+			              </Button>
+			           }
+			          </div>
+			          <div>
+		            <Button variant="raised" onClick={this.props.closePopup}>Close</Button>
+		            </div>
+		          </Modal.Footer>
+		        </Modal>
 	        </div>
 
+	        
 		)
 	}
 }
