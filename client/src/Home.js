@@ -17,7 +17,7 @@ export default class Home extends Component {
             <Col xs={12} md={8} lg={12}>
           <Panel>
             <Panel.Body className="panel_1"> Craft allows easy collaboration between Project Managers and
-              Software Engineers. It's simple to get started! Just Log in and start crafting.
+              their team members. It's simple to get started - just sign up or log in and start Crafting!
             </Panel.Body>
           </Panel>
             </Col>
@@ -25,8 +25,8 @@ export default class Home extends Component {
             <Row>
               <Col xs={12} md={8} lg={12}>
             <Panel>
-              <Panel.Body className="panel_2"> Managers can organize multiple projects and set tasks for Programmers. 
-            Programmers can work on multiple projects and mark tasks as completed. </Panel.Body>
+              <Panel.Body className="panel_2"> Managers can organize multiple projects and set tasks for their team. 
+            Team members can work on multiple projects and mark tasks as completed. </Panel.Body>
             </Panel>
               </Col>
             </Row>
