@@ -16,7 +16,10 @@ router.post('/signup', (req, res) => {
 		username: req.body.username,
 		password_hash: req.body.password,
 	}).then((user) => {
-		res.json({ msg: "User signed" + user.id + user.username });
+		res.status(200).json({
+			username: user.username,
+			id: user.id,
+		})
 	}).catch(() => {
 		res.status(400);
 	});

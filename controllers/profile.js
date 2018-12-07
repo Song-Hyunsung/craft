@@ -48,8 +48,6 @@ router.post('/:id',
 			}).catch(() => {
 				res.status(400).json({ msg: "Error creating project for user " + user.username });
 			});
-		}).catch(() => {
-			res.status(400).json({ msg: "Cannot find user with id " + req.params.id });
 		});
 	});
 
@@ -57,6 +55,7 @@ router.post('/:id',
 
 router.put('/:id/:project_id',
 	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
 	(req, res) => {
 		Project.findById(req.params.project_id).then((project) => {
 			project.update({
@@ -78,6 +77,7 @@ router.put('/:id/:project_id',
 
 router.delete('/:id/:project_id',
 	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
 	(req, res) => {
 		Project.findById(req.params.project_id).then((project) => {
 			project.destroy();
@@ -95,6 +95,7 @@ router.delete('/:id/:project_id',
 
 router.get('/:id/:project_id',
 	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
 	(req, res) => {
 		Project.findById(req.params.project_id).then((project) => {
 			Task.findAll({
@@ -104,7 +105,8 @@ router.get('/:id/:project_id',
 			}).then((task) => {
 				res.json({
 					msg : "Here are all task associated with project id " + project.id,
-					task
+					task,
+					projectTitle : project.projectTitle
 				});
 			});
 		});
@@ -114,6 +116,7 @@ router.get('/:id/:project_id',
 
 router.post('/:id/:project_id',
 	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
 	(req, res) => {
 		Project.findById(req.params.project_id).then((project) => {
 			Task.create({
@@ -129,10 +132,24 @@ router.post('/:id/:project_id',
 		});
 	});
 
+router.get('/:id/:project_id/:task_id',
+	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
+	passport.checkTaskOwnership(),
+	(req, res) => {
+		Task.findById(req.params.task_id).then((task) => {
+			res.json({
+				task
+			});
+		});
+	});
+
 // ROUTE FOR EDITING TASK FOR A PROJECT
 
 router.put('/:id/:project_id/:task_id',
 	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
+	passport.checkTaskOwnership(),
 	(req, res) => {
 		Task.findById(req.params.task_id).then((task) => {
 			task.update({
@@ -154,6 +171,8 @@ router.put('/:id/:project_id/:task_id',
 
 router.delete('/:id/:project_id/:task_id',
 	passport.checkOwnership(),
+	passport.checkProjectOwnership(),
+	passport.checkTaskOwnership(),
 	(req, res) => {
 		Task.findById(req.params.task_id).then((task) => {
 			task.destroy();

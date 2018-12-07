@@ -14,18 +14,25 @@ code {
 }
 
 #site-header {
-	background: #e3e1e4;
-	border-bottom: #000 1px solid;
+  background: #e3e1e4;
+  border-bottom: #000 1px solid;
 }
 
 #site-header a {
-	text-decoration: none;
-	font: 300% "Arial Black", Helvetica, sans-serif;
-	letter-spacing: -8px;
-	color: #676566;
-	margin-left: 10px;
+  font: 600% 'Text Me One', sans-serif;
+  color: #676566;
+  margin-left: 20px;
 }
 
 #site-header span {
-	color: #34333b;
+  color: #34333b;
+}
+
+#inline {
+  display: inline-block
+}
+
+#content-margin{
+  margin-left: 20px;
+  margin-right: 20px;
 }

@@ -23,6 +23,34 @@ export default class Login extends Component {
     this.setState({ password: event.target.value });
   }
 
+  authenticate(username, password, cb){
+   fetch('/api/login', {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json; charset=utf-8",
+     },
+     body: JSON.stringify({
+       username: username,
+       password: password,
+     }),
+   }).then(response => {
+     if(response.status === 200){
+       console.log("Correct Credentials");
+       return response.json();
+     } 
+   }).then(body => {
+     console.log(body.username);
+     console.log(body.id);
+     sessionStorage.setItem('id', body.id);
+     sessionStorage.setItem('username', body.username);
+     sessionStorage.setItem('loggedIn', "true");
+     cb(sessionStorage.getItem('loggedIn'));
+   }).catch(() => {
+     console.log("Wrong Credentials");
+     cb(sessionStorage.getItem('loggedIn'));
+   })
+  }
+
   handleLogin = (event) => {
     if(event === "true"){
       this.setState({ isloggedIn: true });
@@ -30,54 +58,51 @@ export default class Login extends Component {
   }
 
   login = () => {
-    authenticationObject.authenticate(this.state.username, this.state.password, this.handleLogin);
+    this.authenticate(this.state.username, this.state.password, this.handleLogin);
   }
 
   render() {
-
     if(this.state.isloggedIn){
       return <Redirect to={"/profile/" + sessionStorage.getItem('id')} />;
     }
 
     return (
       <div>
-        <PageHeader><center>Login</center></PageHeader>
+        <PageHeader><center>Log In</center></PageHeader>
         <div className="Login">
-          <input type="text" placeholder="Username" value={this.state.username} onChange={this.usernameChanged} />
-          <input type="text" placeholder="Password" value={this.state.password} onChange={this.passwordChanged} />
-          <button onClick={this.login}> Log in </button>
+
+          <form>
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Username</ControlLabel>
+              <FormControl
+                autoFocus
+                type="text"
+                value={this.state.username}
+                onChange={this.usernameChanged}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                value={this.state.password}
+                onChange={this.passwordChanged}
+                type="password"
+              />
+            </FormGroup>
+            <Button
+              block
+              bsSize="large"
+              onClick={this.login}
+            >
+              Log In
+            </Button>
+          </form>
         </div>
       </div>
+
+
     );
   }
 }
 
-const authenticationObject = {
-  authenticate(username, password, cb){
-    fetch('/api/login', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    }).then(response => {
-      if(response.status === 200){
-        console.log("Correct Credentials");
-        return response.json();
-      } 
-    }).then(body => {
-      console.log(body.username);
-      console.log(body.id);
-      sessionStorage.setItem('id', body.id);
-      sessionStorage.setItem('username', body.username);
-      sessionStorage.setItem('loggedIn', "true");
-      cb(sessionStorage.getItem('loggedIn'));
-    }).catch(() => {
-      console.log("Wrong Credentials");
-      cb(sessionStorage.getItem('loggedIn'));
-    })
-  },
-}
+
