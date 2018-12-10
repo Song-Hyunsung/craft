@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
 		projectDescription : {
 			type: DataTypes.TEXT,
 		},
+		projectArchived : {
+			type: DataTypes.BOOLEAN,
+			allowNull : false,
+			defaultValue: false,
+		},
 	});
 
 	Project.associate = function(models){

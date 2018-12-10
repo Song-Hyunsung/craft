@@ -61,6 +61,7 @@ router.put('/:id/:project_id',
 			project.update({
 				projectTitle: req.body.projectTitle,
 				projectDescription: req.body.projectDescription,
+				projectArchived: req.body.projectArchived,
 			}).then((updatedProject) => {
 				res.json({
 					updatedProject

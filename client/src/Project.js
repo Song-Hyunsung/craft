@@ -15,19 +15,21 @@ class Project extends Component {
 			projectDescription: null,
 			createdAt: null,
 			updatedAt: null,
+			projectArchived: null,
 			showPopup: false,
 		}
 	}
 
 	componentWillMount(){
-		const {UserId, createdAt, id, projectDescription, projectTitle, updatedAt} = this.props;
+		const {UserId, createdAt, id, projectDescription, projectTitle, updatedAt, projectArchived} = this.props;
 		this.setState({
 			userId: UserId,
 			projectId: id,
 			projectTitle: projectTitle,
 			projectDescription: projectDescription,
 			createdAt: createdAt,
-			updatedAt: updatedAt
+			updatedAt: updatedAt,
+			projectArchived: projectArchived,
 		})
 	}
 
@@ -49,7 +51,44 @@ class Project extends Component {
 		})
 	}
 
-	refreshPage(){
+	archiveProject(cb){
+		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.state.projectId, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			body: JSON.stringify({
+				projectTitle: this.state.projectTitle,
+				projectDescription: this.state.projectDescription,
+				projectArchived: !this.state.projectArchived,
+			}),
+		}).then(response => {
+			if(response.status === 200){
+				console.log("Archiving Project");
+				return response.json();
+			}
+		}).then(body => {
+			cb();
+		}).catch(() => {
+			console.log("Error archiving project");
+		})
+	}
+
+	handleArchive = () => {
+		this.setState({
+			projectArchived: true,
+		});
+		this.refreshPage();
+	}
+
+	handleUnarchive = () => {
+		this.setState({
+			projectArchived: false,
+		})
+		this.refreshPage();
+	}
+
+	refreshPage = () => {
 		window.location.reload();
 	}
 
@@ -76,13 +115,20 @@ class Project extends Component {
 					<b>Project Description</b>: {this.state.projectDescription} <br />
 				</Panel.Body>
  				<Panel.Footer>
- 					<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update Project</Button>
- 					<Button variant="raised" color="primary" size="small" disabled={true}>Archive Project</Button>
+ 					{!this.state.projectArchived ?
+ 						<div>
+ 						<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update Project</Button>
+ 						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleArchive)}>Archive Project</Button>
+ 						</div>
+ 						:
+ 						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleUnarchive)}>Unarchive Project</Button>
+ 					}
  					<Button variant="raised" color="danger" size="small" onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</Button>
 		   			{this.state.showPopup ?
 		   				<ProjectForm
 		   					type='Update'
 		   					updateProjectId={this.state.projectId}
+		   					updateArchive={this.state.projectArchived}
 		   					closePopup={() => this.togglePopup()}
 		   					pastTitle={this.state.projectTitle}
 		   					pastDescription={this.state.projectDescription}

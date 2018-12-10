@@ -39,9 +39,23 @@ class ProjectList extends Component {
 
 	render(){
 		let renderedProjects = this.state.projects.map((prj, index) => {
-			return(
-				<Project key={prj.id} {...prj} />
-			)
+			if(!prj.projectArchived){
+				return(
+					<Project key={prj.id} {...prj} />
+				)
+			} else {
+				return [];
+			}
+		})
+
+		let archivedProjects = this.state.projects.map((prj, index) => {
+			if(prj.projectArchived){
+				return(
+					<Project key={prj.id} {...prj} />
+				)
+			} else {
+				return [];
+			}
 		})
 
 	   	return(
@@ -50,8 +64,7 @@ class ProjectList extends Component {
 
 	   			<Tabs justified={true}>
 	   				<Tab value="pane-1" label="Ongoing Projects">
-			   			{renderedProjects.length === 0 ? <div><br /><center>You have no projects to display.</center></div> : null }
-
+			   			
 			   			<br />
 			   			<center><Button variant="raised" color="primary" onClick={() => this.togglePopup()}>Create New Project</Button></center>
 			   			<br />
@@ -68,7 +81,9 @@ class ProjectList extends Component {
 			   			</div>
 			   		</Tab>
 			   		<Tab value="pane-2" label="Archived Projects">
-			   			<div><br /><center>You have no archived projects.</center></div> 
+			   			<div id="content-margin">
+			   				{archivedProjects}
+			   			</div>
 			   		</Tab>
 		   		</Tabs>
 	   		</div>

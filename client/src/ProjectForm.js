@@ -12,6 +12,7 @@ class ProjectForm extends Component {
 			description: "",
 			done: false,
 			projectId: null,
+			projectArchived: null,
 		}
 	}
 
@@ -19,7 +20,8 @@ class ProjectForm extends Component {
  		if(this.props.type === "Update"){
  			this.setState({
  				title: this.props.pastTitle,
- 				description: this.props.pastDescription
+ 				description: this.props.pastDescription,
+ 				projectArchived: this.props.updateArchive,
  			})
  		}
  	}
@@ -63,6 +65,7 @@ class ProjectForm extends Component {
 			body: JSON.stringify({
 				projectTitle: this.state.title,
 				projectDescription: this.state.description,
+				projectArchived: this.state.projectArchived,
 			}),
 		}).then(response => {
 			if(response.status === 200){
@@ -103,7 +106,7 @@ class ProjectForm extends Component {
 		return(
 
 			<div>
-				<Modal show="true">
+				<Modal show={true}>
 		          <Modal.Header>
 		            <Modal.Title>
 		              {this.props.type} Project

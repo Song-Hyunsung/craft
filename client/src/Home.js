@@ -7,7 +7,7 @@ export default class Home extends Component {
     	<div className="wrapper">
         <div className="main">
           <div className="p_1">
-        <PageHeader><h1><center>Welcome to Craft</center></h1></PageHeader>
+        <PageHeader><div><center>Welcome to Craft</center></div></PageHeader>
         <h3><center> A minimalistic project management system </center></h3>
           </div>
         </div>
