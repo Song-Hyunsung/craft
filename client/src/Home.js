@@ -11,33 +11,6 @@ export default class Home extends Component {
         <h3><center> A minimalistic project management system </center></h3>
           </div>
         </div>
-        
-        <Grid>
-          <Row>
-            <Col xs={12} md={8} lg={12}>
-          <Panel>
-            <Panel.Body className="panel_1"> Craft allows easy collaboration between Project Managers and
-              their team members. It's simple to get started - just sign up or log in and start Crafting!
-            </Panel.Body>
-          </Panel>
-            </Col>
-          </Row>
-            <Row>
-              <Col xs={12} md={8} lg={12}>
-            <Panel>
-              <Panel.Body className="panel_2"> Managers can organize multiple projects and set tasks for their team. 
-            Team members can work on multiple projects and mark tasks as completed. </Panel.Body>
-            </Panel>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={8} lg={12}>
-              <Panel>
-                <Panel.Body className="panel_3"> Got feedback or questions? Email us at craft@gmail.com </Panel.Body>
-              </Panel>
-              </Col>
-            </Row>
-        </Grid>
   		</div>
     );
   }

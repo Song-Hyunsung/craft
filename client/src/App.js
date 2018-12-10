@@ -5,6 +5,7 @@ import Signup from './Signup';
 import Login from './Login';
 import ProjectList from './ProjectList';
 import TaskList from './TaskList';
+import './App.css';
 
 export default class App extends Component {
 
@@ -18,7 +19,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <div className="craft-navbar">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light ">
+          <nav className="navbar navbar-expand-lg navbar-light bg-light " id="noMargin">
             <div className="collapse navbar-collapse" id="navbarNav">
                 { !isLoggedIn ? ( //Navbar if user not logged in
                   <div>
