@@ -112,7 +112,8 @@ router.get('/:id/:project_id',
 					projectId: project.id,
 					projectDescription: project.projectDescription,
 					createdAt: project.createdAt,
-					updatedAt: project.updatedAt
+					updatedAt: project.updatedAt,
+					projectArchived: project.projectArchived,
 				});
 			});
 		});
@@ -161,6 +162,7 @@ router.put('/:id/:project_id/:task_id',
 			task.update({
 				taskTitle: req.body.taskTitle,
 				taskDescription: req.body.taskDescription,
+				taskCompleted: req.body.taskCompleted,
 			}).then((updatedTask) => {
 				res.json({
 					updatedTask

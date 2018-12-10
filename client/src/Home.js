@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { PageHeader,Panel, Grid, Row, Col} from "react-bootstrap";
+import { PageHeader } from "react-bootstrap";
 import './Home.css'
 export default class Home extends Component {
   render() {

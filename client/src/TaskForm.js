@@ -9,6 +9,7 @@ class TaskForm extends Component {
 		this.state = {
 			title: "",
 			description: "",
+			taskCompleted: null,
 			done: false,
 		}
 	}
@@ -17,7 +18,8 @@ class TaskForm extends Component {
  		if(this.props.type === "Update"){
  			this.setState({
  				title: this.props.pastTitle,
- 				description: this.props.pastDescription
+ 				description: this.props.pastDescription,
+ 				taskCompleted: this.props.updateComplete,
  			})
  		}
  	}
@@ -61,6 +63,7 @@ class TaskForm extends Component {
 			body: JSON.stringify({
 				taskTitle: this.state.title,
 				taskDescription: this.state.description,
+				taskCompleted: this.state.taskCompleted,
 			}),
 		}).then(response => {
 			if(response.status === 200){
@@ -98,7 +101,7 @@ class TaskForm extends Component {
 		return(
 
 			<div>
-				<Modal show="true">
+				<Modal show={true}>
 		          <Modal.Header>
 		            <Modal.Title>
 		              {this.props.type} Task
