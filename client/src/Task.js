@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap';
 import TaskForm from './TaskForm';
 import { Button } from 'muicss/react';
+import TaskDeletePrompt from './TaskDeletePrompt';
 
 class Task extends Component {
 	constructor(props){
@@ -16,6 +17,7 @@ class Task extends Component {
 			updatedAt: null,
 			taskCompleted: null,
 			showPopup: false,
+			showDeletePrompt: false,
 		}
 	}
 
@@ -29,24 +31,6 @@ class Task extends Component {
 			createdAt: createdAt,
 			updatedAt: updatedAt,
 			taskCompleted: taskCompleted,
-		})
-	}
-
-	deleteTask(cb){
-		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.state.projectId + '/' + this.state.taskId, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-			},
-		}).then(response => {
-			if(response.status === 200){
-				console.log("Succesfully deleted task");
-			}
-		}).then(() => {
-			cb();
-		}).catch(() => {
-			console.log("Error deleting task");
-			cb();
 		})
 	}
 
@@ -97,6 +81,12 @@ class Task extends Component {
 		});
 	}
 
+	toggleDeletePrompt = (event) => {
+		this.setState({
+			showDeletePrompt: !this.state.showDeletePrompt
+		});
+	}
+
 	render(){
 		return(
 			<Panel>
@@ -111,14 +101,22 @@ class Task extends Component {
 				{!this.props.projectArchived ? 
  				<Panel.Footer>
  					{!this.state.taskCompleted ?
- 					<div>
+ 					<span>
  					<Button variant="raised" size="small" onClick={() => this.togglePopup()}>Update Task</Button>
  					<Button variant="raised" color="primary" size="small" onClick={() => this.completeTask(this.handleComplete)}>Complete Task</Button>
- 					</div>
+ 					</span>
  					:
  					<Button variant="raised" color="primary" size="small" onClick={() => this.completeTask(this.handleUncomplete)}>Work on this task again</Button> 
- 					}
- 					<Button variant="raised" color="danger" size="small" onClick={() => this.deleteTask(this.refreshPage)}>Delete this task</Button>
+ 					} {' '}
+ 					<Button variant="raised" color="danger" size="small" onClick={() => this.toggleDeletePrompt()}>Delete this task</Button>
+ 					{this.state.showDeletePrompt ?
+		   				<TaskDeletePrompt
+		   					deleteProjectId={this.state.projectId}
+		   					deleteTaskId={this.state.taskId}
+		   					deleteTaskTitle={this.state.taskTitle}
+		   					closePopup={() => this.toggleDeletePrompt()}
+		   				/> : null
+		   			}
 		   			{this.state.showPopup ?
 		   				<TaskForm
 		   					type='Update'

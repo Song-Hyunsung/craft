@@ -5,6 +5,7 @@ import Signup from './Signup';
 import Login from './Login';
 import ProjectList from './ProjectList';
 import TaskList from './TaskList';
+import About from './About';
 import './App.css';
 
 export default class App extends Component {
@@ -25,6 +26,7 @@ export default class App extends Component {
                   <div>
                     <span className="nav navbar-brand navbar-left">Welcome, guest! Log in or sign up to start Crafting.</span>
                       <ul className="nav navbar-nav navbar-right">
+                        <li><Link className="nav-link" to={"/about/"}>About Us</Link></li>
                         <li><Link className="nav-link" to={"/login/"}>Log In</Link></li>
                         <li><Link className="nav-link" to={"/signup/"}>Sign Up</Link></li>
                       </ul>
@@ -34,6 +36,7 @@ export default class App extends Component {
                       <span className="nav navbar-brand navbar-left">Hello, {sessionStorage.getItem('username')}!</span>
                       <ul className="nav navbar-nav navbar-right">
                         <li><Link className="nav-link" to={"/profile/" + sessionStorage.getItem('id')}>My Projects</Link></li>
+                        <li><Link className="nav-link" to={"/about/"}>About Us</Link></li>
                         <li><Link className="nav-link" onClick={() => {this.logout();}} to="/">Log Out</Link></li>
                       </ul>
                     </div>
@@ -50,6 +53,7 @@ export default class App extends Component {
           <Route exact={true} path="/login" component={Login}/>
           <Route exact={true} path="/profile/:userid" component={ProjectList}/>
           <Route exact={true} path="/profile/:userid/:projectid" component={TaskList}/>
+          <Route exact={true} path="/about" component={About}/>
           </Switch>
         </div>
 

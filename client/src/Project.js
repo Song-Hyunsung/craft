@@ -3,6 +3,7 @@ import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
 import { Button } from 'muicss/react';
+import ProjectDeletePrompt from './ProjectDeletePrompt';
 
 class Project extends Component {
 	constructor(props){
@@ -17,6 +18,7 @@ class Project extends Component {
 			updatedAt: null,
 			projectArchived: null,
 			showPopup: false,
+			showDeletePrompt: false,
 		}
 	}
 
@@ -30,24 +32,6 @@ class Project extends Component {
 			createdAt: createdAt,
 			updatedAt: updatedAt,
 			projectArchived: projectArchived,
-		})
-	}
-
-	deleteProject(cb){
-		fetch('/api/profile/' + sessionStorage.getItem('id') + '/' + this.state.projectId, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-			},
-		}).then(response => {
-			if(response.status === 200){
-				console.log("Succesfully deleted project");
-			}
-		}).then(() => {
-			cb();
-		}).catch(() => {
-			console.log("Error deleting project");
-			cb();
 		})
 	}
 
@@ -98,6 +82,12 @@ class Project extends Component {
 		});
 	}
 
+	toggleDeletePrompt = (event) => {
+		this.setState({
+			showDeletePrompt: !this.state.showDeletePrompt
+		});
+	}
+
 	render(){
 		return(
 			<div>
@@ -116,14 +106,21 @@ class Project extends Component {
 				</Panel.Body>
  				<Panel.Footer>
  					{!this.state.projectArchived ?
- 						<div>
+ 						<span>
  						<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update Project</Button>
  						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleArchive)}>Archive Project</Button>
- 						</div>
+ 						</span>
  						:
  						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleUnarchive)}>Unarchive Project</Button>
- 					}
- 					<Button variant="raised" color="danger" size="small" onClick={() => this.deleteProject(this.refreshPage)}>Delete this project</Button>
+ 					} {' '}
+ 					<Button variant="raised" color="danger" size="small" onClick={() => this.toggleDeletePrompt()}>Delete this project</Button>
+ 					{this.state.showDeletePrompt ?
+		   				<ProjectDeletePrompt
+		   					deleteProjectId={this.state.projectId}
+		   					deleteProjectTitle={this.state.projectTitle}
+		   					closePopup={() => this.toggleDeletePrompt()}
+		   				/> : null
+		   			}
 		   			{this.state.showPopup ?
 		   				<ProjectForm
 		   					type='Update'
