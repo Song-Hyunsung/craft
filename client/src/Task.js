@@ -93,7 +93,7 @@ class Task extends Component {
 			<Panel>
 				<Panel.Heading><b>{this.state.taskTitle}</b></Panel.Heading>
 				<Panel.Body>
-					<div> {this.state.taskDescription} </div>
+					<div className="breakWord"> {this.state.taskDescription} </div>
 					<br/>
 					<div className="showTime">Last updated at: {new Date(this.state.updatedAt).toLocaleString()} </div>
 				</Panel.Body>

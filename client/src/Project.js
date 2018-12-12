@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
 import { Button } from 'muicss/react';
 import ProjectDeletePrompt from './ProjectDeletePrompt';
+import './App.css';
 
 class Project extends Component {
 	constructor(props){
@@ -98,7 +99,7 @@ class Project extends Component {
 					</Link>
 				</Panel.Heading>
 				<Panel.Body>
-					<div>{this.state.projectDescription} </div>
+					<div className="breakWord">{this.state.projectDescription} </div>
 					<br/>
 					<div className="showTime">Last updated at: {new Date(this.state.updatedAt).toLocaleString()} </div>
 				</Panel.Body>

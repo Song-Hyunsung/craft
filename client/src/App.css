@@ -36,3 +36,7 @@
 .marginTop {
 	margin-top: 50px;
 }
+
+.breakWord {
+	word-wrap: break-word;
+}
