@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "brianhao",
-    "password": "brianhao",
+    "username": "song_project",
+    "password": "BalthasarGelt1!",
     "database": "craft_development",
     "host": "127.0.0.1",
     "dialect": "postgresql"

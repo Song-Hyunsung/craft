@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Modal } from "react-bootstrap";
-import { Form, Input, Button } from 'muicss/react';
-import { Redirect } from "react-router-dom";
+import { Button } from 'muicss/react';
 
 class ProjectDeletePrompt extends Component {
 	constructor(props){

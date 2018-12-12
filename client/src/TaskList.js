@@ -32,14 +32,16 @@ class TaskList extends Component {
 		}).then(response => {
 			return response.json();
 		}).then(body => {
-			this.setState({ projectName: body.projectTitle });
-			this.setState({ tasks: body.task });
-			this.setState({ userId: body.userId });
-			this.setState({ projectId: body.projectId });
-			this.setState({ projectDescription: body.projectDescription });
-			this.setState({ createdAt: body.createdAt });
-			this.setState({ updatedAt: body.updatedAt });
-			this.setState({ projectArchived: body.projectArchived })
+			this.setState({
+				projectName: body.projectTitle,
+				tasks: body.task,
+				userId: body.userId,
+				projectId: body.projectId,
+				projectDescription: body.projectDescription,
+				createdAt: body.createdAt,
+				updatedAt: body.updatedAt,
+				projectArchived: body.projectArchived
+			})
 		}).catch(() => {
 			console.log("Error retrieving tasks");
 		})
@@ -108,6 +110,7 @@ class TaskList extends Component {
 	   				<Tab value="pane-1" label="Open Tasks">
 	   					{!this.state.projectArchived ?
 	   					<div>
+	   					<br />
 			   			<center><Button variant="raised" color="primary" onClick={() => this.togglePopup()}>Add New Task</Button></center>
 			   			<br />
 			   			</div>
