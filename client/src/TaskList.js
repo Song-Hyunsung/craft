@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { PageHeader } from "react-bootstrap";
+import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 import { Button, Tab, Tabs, Panel } from 'muicss/react';
 import Task from './Task';
 import TaskForm from './TaskForm';
 import ProjectForm from './ProjectForm'
+import './TaskList.css';
+import './App.css';
 
 class TaskList extends Component {
 	constructor(props){
@@ -63,8 +65,10 @@ class TaskList extends Component {
 		let renderedTasks = this.state.tasks.map((task, index) => {
 			if(!task.taskCompleted){
 				return(
-					<Task projectArchived={this.state.projectArchived} key={task.id} {...task} />
-				)
+					<Col sm={12} md={6} lg={3} key={task.id} className="reducePadding">
+						<Task projectArchived={this.state.projectArchived} key={task.id} {...task} />
+					</Col>
+				)	
 			} else {
 				return [];
 			}
@@ -73,7 +77,9 @@ class TaskList extends Component {
 		let completedTasks = this.state.tasks.map((task, index) => {
 			if(task.taskCompleted){
 				return(
-					<Task projectArchived={this.state.projectArchived} key={task.id} {...task} />
+					<Col sm={12} md={6} lg={3} key={task.id} className="reducePadding">
+						<Task projectArchived={this.state.projectArchived} key={task.id} {...task} />
+					</Col>
 				)
 			} else {
 				return [];
@@ -84,29 +90,27 @@ class TaskList extends Component {
 			<div>
 	   			<PageHeader><center>Viewing {this.state.projectArchived ? <span>Archived</span> : null} Project: {this.state.projectName}</center></PageHeader>
 
-	   			<Panel id="content-margin">
-	   				<b>Project ID</b>: {this.state.projectId} <br />
-					<b>Associated User ID</b>: {this.state.userId} <br />
-					<b>Created at</b>: {this.state.createdAt} <br />
-					<b>Last updated at</b>: {this.state.updatedAt} <br />
-					<b>Project Description</b>: {this.state.projectDescription} <br />
-					{!this.state.projectArchived ?
-					<Button variant="raised" size="small"onClick={() => this.toggleProjPopup()}>Update Project</Button>
-					: null
-					}
-					{this.state.showProjPopup ?
-		   				<ProjectForm
-		   					type='Update'
-		   					updateProjectId={this.state.projectId}
-		   					updateArchive={this.state.projectArchived}
-		   					closePopup={() => this.toggleProjPopup()}
-		   					pastTitle={this.state.projectName}
-		   					pastDescription={this.state.projectDescription}
-		   				/> : null
-		   			}
-	   			</Panel>
+	   			<center>
+		   			<Panel id="content-margin" className="no-shade">
+						<div> {this.state.projectDescription} </div>
+						{!this.state.projectArchived ?
+						<Button variant="raised" size="small"onClick={() => this.toggleProjPopup()}>Update Project</Button>
+						: null
+						}
+						{this.state.showProjPopup ?
+			   				<ProjectForm
+			   					type='Update'
+			   					updateProjectId={this.state.projectId}
+			   					updateArchive={this.state.projectArchived}
+			   					closePopup={() => this.toggleProjPopup()}
+			   					pastTitle={this.state.projectName}
+			   					pastDescription={this.state.projectDescription}
+			   				/> : null
+			   			}
+		   			</Panel>
+		   		</center>
 
-	   			<Tabs justified={true}>
+		   		<Tabs justified={true}>
 	   				<Tab value="pane-1" label="Open Tasks">
 	   					{!this.state.projectArchived ?
 	   					<div>
@@ -125,12 +129,20 @@ class TaskList extends Component {
 			   				/> : null
 			   			}
 			   			<div id="content-margin">
-			   				{renderedTasks}
+			   				<Grid>
+					    		<Row className="show-grid">
+		   				        	{renderedTasks}
+			   				    </Row>
+			   				</Grid>
 			   			</div>
 			   		</Tab>
 			   		<Tab value="pane-2" label="Completed Tasks">
-			   			<div id="content-margin">
-			   				{completedTasks}
+			   			<div id="content-margin" className="marginTop">
+			   				<Grid>
+			   					<Row className="show-grid">
+			   						{completedTasks}
+			   					</Row>
+			   				</Grid>
 			   			</div>
 			   		</Tab>
 		   		</Tabs>

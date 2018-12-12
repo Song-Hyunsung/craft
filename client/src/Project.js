@@ -94,26 +94,24 @@ class Project extends Component {
 			<Panel>
 				<Panel.Heading>
 					<Link to={"/profile/" + this.state.userId + "/" + this.state.projectId}>
-						<b>Project Title: {this.state.projectTitle}</b>
+						<b>{this.state.projectTitle}</b>
 					</Link>
 				</Panel.Heading>
 				<Panel.Body>
-					<b>Project ID</b>: {this.state.projectId} <br />
-					<b>Associated User ID</b>: {this.state.userId} <br />
-					<b>Created at</b>: {this.state.createdAt} <br />
-					<b>Last updated at</b>: {this.state.updatedAt} <br />
-					<b>Project Description</b>: {this.state.projectDescription} <br />
+					<div>{this.state.projectDescription} </div>
+					<br/>
+					<div className="showTime">Last updated at: {new Date(this.state.updatedAt).toLocaleString()} </div>
 				</Panel.Body>
  				<Panel.Footer>
  					{!this.state.projectArchived ?
  						<span>
- 						<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update Project</Button>
- 						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleArchive)}>Archive Project</Button>
+ 						<Button variant="raised" size="small"onClick={() => this.togglePopup()}>Update</Button>
+ 						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleArchive)}>Archive</Button>
  						</span>
  						:
- 						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleUnarchive)}>Unarchive Project</Button>
+ 						<Button variant="raised" color="primary" size="small" onClick={() => this.archiveProject(this.handleUnarchive)}>Unarchive</Button>
  					} {' '}
- 					<Button variant="raised" color="danger" size="small" onClick={() => this.toggleDeletePrompt()}>Delete this project</Button>
+ 					<Button variant="raised" color="danger" size="small" onClick={() => this.toggleDeletePrompt()}>Delete</Button>
  					{this.state.showDeletePrompt ?
 		   				<ProjectDeletePrompt
 		   					deleteProjectId={this.state.projectId}

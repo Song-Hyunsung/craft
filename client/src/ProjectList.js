@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Project from './Project'
 import ProjectForm from './ProjectForm'
-import { PageHeader } from "react-bootstrap";
+import { PageHeader, Col, Grid, Row } from "react-bootstrap";
 import { Button, Tab, Tabs } from 'muicss/react';
 
 class ProjectList extends Component {
@@ -41,7 +41,9 @@ class ProjectList extends Component {
 		let renderedProjects = this.state.projects.map((prj, index) => {
 			if(!prj.projectArchived){
 				return(
-					<Project key={prj.id} {...prj} />
+					<Col sm={12} md={6} lg={3} key={prj.id} className="reducePadding">
+						<Project key={prj.id} {...prj} />
+					</Col>
 				)
 			} else {
 				return [];
@@ -51,7 +53,9 @@ class ProjectList extends Component {
 		let archivedProjects = this.state.projects.map((prj, index) => {
 			if(prj.projectArchived){
 				return(
-					<Project key={prj.id} {...prj} />
+					<Col sm={12} md={6} lg={3} key={prj.id} className="reducePadding">
+						<Project key={prj.id} {...prj} />
+					</Col>
 				)
 			} else {
 				return [];
@@ -77,12 +81,20 @@ class ProjectList extends Component {
 			   			}
 
 			   			<div id="content-margin">
-			   				{renderedProjects}
+			   				<Grid>
+			   					<Row>
+			   						{renderedProjects}
+			   					</Row>
+			   				</Grid>
 			   			</div>
 			   		</Tab>
 			   		<Tab value="pane-2" label="Archived Projects">
-			   			<div id="content-margin">
-			   				{archivedProjects}
+			   			<div id="content-margin" className="marginTop">
+			   				<Grid>
+			   					<Row>
+			   						{archivedProjects}
+			   					</Row>
+			   				</Grid>
 			   			</div>
 			   		</Tab>
 		   		</Tabs>
