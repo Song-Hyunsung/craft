@@ -128,7 +128,7 @@ class TaskList extends Component {
 			   					closePopup={() => this.togglePopup()}
 			   				/> : null
 			   			}
-			   			<div id="content-margin">
+			   			<div id="content-margin" className="marginTop">
 			   				<Grid>
 					    		<Row className="show-grid">
 		   				        	{renderedTasks}
